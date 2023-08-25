@@ -101,16 +101,17 @@ def send_screen():
     # Read properties from request
     name = request.form["name"]
     email_addr = request.form["email_addr"]
+    instr = request.form["instr"]
     lang = request.form["lang"]
 
-    print("Request: ", name, email_addr, lang)
+    print("Request: ", name, email_addr, instr, lang)
 
     text = ""
 
     try:
         print("Sending email to %s..." % email_addr, end="")
         send_mail(name, email_addr, get_text(lang))
-        logfile.write("%s,%s,%s,%s\n" % (name, email_addr, lang, "true"))
+        logfile.write("%s,%s,%s,%s,%s\n" % (name, email_addr, instr, lang, "true"))
         print("   OK!")
 
         if lang == "nobm":
@@ -156,7 +157,7 @@ def main():
 
         else:
             logfile = open("collected_%d.csv" % time.time(), "w")
-            logfile.write("navn,epost,språk,sendt infomail\n")
+            logfile.write("navn,epost,instrument,språk,sendt infomail\n")
 
         logfile.flush()
 
